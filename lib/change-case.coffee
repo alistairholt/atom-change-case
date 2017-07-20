@@ -41,7 +41,12 @@ makeCommand = (command) ->
         selection.selectWord()
 
       text = selection.getText()
-      newText = converter(text)
+      text = text.replace("\r\n", "\n") # Just in case
+      lines = text.split("\n")
+      newLines = []
+      lines.forEach (line) ->
+        newLines.push converter(line)
+      newText = newLines.join("\n")
 
       selection.insertText newText, select: true
 
